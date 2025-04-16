@@ -1,15 +1,14 @@
 import glob
 import io
 import logging
+from itertools import zip_longest as zip_longest
 
 import pytest
 from eppy.modeleditor import IDF
 from eppy.useful_scripts.idfdiff import getobjname
+from numpy import isclose
 
 from idf2yaml import idf2yaml, yaml2idf, DEFAULT_IDD
-from itertools import zip_longest as zip_longest
-from numpy import isclose
-from numpy.exceptions import DTypePromotionError
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -20,11 +19,12 @@ stream_handler = logging.StreamHandler()
 stream_handler.setLevel(logging.INFO)
 
 # Create a formatter and add it to the handler
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 stream_handler.setFormatter(formatter)
 
 # Add the handler to the logger
 logger.addHandler(stream_handler)
+
 
 # This comparison function was forked from the one included in eppy to
 # use np.isclose as a validation for floats. Otherwise, in round trips
@@ -38,9 +38,7 @@ def idfdiffs(idf1, idf2):
     for akey in keys:
         idfobjs1 = idf1.idfobjects[akey]
         idfobjs2 = idf2.idfobjects[akey]
-        names = set(
-            [getobjname(i) for i in idfobjs1] + [getobjname(i) for i in idfobjs2]
-        )
+        names = set([getobjname(i) for i in idfobjs1] + [getobjname(i) for i in idfobjs2])
         names = sorted(names)
         idfobjs1 = sorted(idfobjs1, key=lambda idfobj: idfobj["obj"])
         idfobjs2 = sorted(idfobjs2, key=lambda idfobj: idfobj["obj"])
@@ -65,12 +63,10 @@ def idfdiffs(idf1, idf2):
                         f1, f2 = f1.upper(), f2.upper()
                     try:
                         values_different = not isclose(f1, f2)
-                    except (TypeError, DTypePromotionError):
+                    except TypeError as e:
                         values_different = f1 != f2
                     if values_different:
-                        thediffs[
-                            (akey, getobjname(idfobj1), idfobj1.objidd[i]["field"][0])
-                        ] = (f1, f2)
+                        thediffs[(akey, getobjname(idfobj1), idfobj1.objidd[i]["field"][0])] = (f1, f2)
     return thediffs
 
 
@@ -81,7 +77,7 @@ def test_idf_round_trip(idf_file):
     try:
         # Convert IDF to YAML
         yaml_str = idf2yaml(idf_file, output_path=None)
-        
+
         # Convert YAML back to IDF
         round_trip_1 = yaml2idf(yaml_str, output_path=None)
         f = io.StringIO(round_trip_1)
@@ -89,20 +85,21 @@ def test_idf_round_trip(idf_file):
         # Create IDF objects for comparison
         class LocalForkIDF(IDF):
             pass
+
         LocalForkIDF.setiddname(DEFAULT_IDD)
         start_idf = LocalForkIDF(idf_file)
         round_idf = LocalForkIDF(f)
 
         # Compare the original and round-trip IDFs
         diff = idfdiffs(start_idf, round_idf)
-        
+
         # Log success if no differences found
         if not diff:
             logger.info(f"Successfully completed round trip for {idf_file}")
-        
+
         # Assert that there are no differences
         assert not diff, f"Round trip conversion failed for {idf_file}. Differences found:\n{diff}"
-        
+
     except Exception as e:
         logger.error(f"Error processing {idf_file}: {str(e)}")
         pytest.fail(f"Error processing {idf_file}: {str(e)}")

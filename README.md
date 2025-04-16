@@ -1,5 +1,4 @@
 [![codecov](https://codecov.io/gh/supsi-dacd-isaac/idf2yaml/branch/main/graph/badge.svg)](https://codecov.io/gh/supsi-dacd-isaac/idf2yaml)
-[![Build Status](https://github.com/supsi-dacd-isaac/idf2yaml/workflows/CI/badge.svg)](https://github.com/supsi-dacd-isaac/idf2yaml/actions)
 [![PyPI](https://img.shields.io/pypi/v/idf2yaml)](https://pypi.org/project/idf2yaml/)
 [![License](https://img.shields.io/github/license/supsi-dacd-isaac/idf2yaml)](https://github.com/supsi-dacd-isaac/idf2yaml/blob/main/LICENSE)
 
