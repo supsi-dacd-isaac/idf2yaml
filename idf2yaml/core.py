@@ -37,7 +37,7 @@ def make_help_string(meta):
     return help_string
 
 
-def idf2yaml(idf, idd=DEFAULT_IDD, skip_empty=True, output_path=None, **ruamel_yaml_kwargs):
+def idf2yaml(idf, idd=DEFAULT_IDD, skip_empty=True, output_path=None, insert_memo=False, **ruamel_yaml_kwargs):
     """Convert IDF object to YAML format."""
 
     # We create a local fork class as a workaround for unexpected behavior of eppy.
@@ -115,11 +115,10 @@ def idf2yaml(idf, idd=DEFAULT_IDD, skip_empty=True, output_path=None, **ruamel_y
     # add blanks and object memo
     for key, value in yaml_data.items():
         object_index = idd_types_order.index(key.upper())
-        if idf_parsed.idd_info[object_index]:
+        memo = None
+        if insert_memo and idf_parsed.idd_info[object_index]:
             memo = "\n".join(idf_parsed.idd_info[object_index][0].get("memo", []))
-        else:
-            memo = ""
-        yaml_data.yaml_set_comment_before_after_key(key, before="\n", after=None)
+        yaml_data.yaml_set_comment_before_after_key(key, before="\n", after=memo)
 
     # prepare emitter
     yaml_struct = YAML()
@@ -184,7 +183,3 @@ def yaml2idf(yaml, idd=DEFAULT_IDD, output_path=None, **ruamel_yaml_kwargs):
         idf_out.save(output_path)
 
     return idf_out.idfstr()
-
-
-if __name__ == "__main__":
-    pass

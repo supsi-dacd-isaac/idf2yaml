@@ -1,6 +1,7 @@
 [![codecov](https://codecov.io/gh/supsi-dacd-isaac/idf2yaml/branch/main/graph/badge.svg)](https://codecov.io/gh/supsi-dacd-isaac/idf2yaml)
 [![PyPI](https://img.shields.io/pypi/v/idf2yaml)](https://pypi.org/project/idf2yaml/)
 [![License](https://img.shields.io/github/license/supsi-dacd-isaac/idf2yaml)](https://github.com/supsi-dacd-isaac/idf2yaml/blob/main/LICENSE)
+[![Test and Lint](https://github.com/supsi-dacd-isaac/idf2yaml/actions/workflows/test.yml/badge.svg)](https://github.com/supsi-dacd-isaac/idf2yaml/actions/workflows/test.yml)
 
 [idf2yaml](https://github.com/supsi-dacd-isaac/idf2yaml) is a package that converts IDF files for the [EnergyPlus](https://github.com/NREL/EnergyPlus) simulation
 software to YAML format **and vice versa**. This package allows users to easily convert between these two formats, enabling to work with 
