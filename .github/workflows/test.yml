@@ -43,7 +43,7 @@ jobs:
     
     - name: Run tests with pytest
       run: |
-        pytest tests/test_round_trip_fast.py tests/test_file_rt.py tests/test_wrong_attribute.py --cov=idf2yaml --cov-report=xml
+        pytest tests/test_round_trip_fast.py tests/test_file_rt.py tests/test_wrong_attribute.py tests/test_cli.py --cov=idf2yaml --cov-report=xml
     
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
