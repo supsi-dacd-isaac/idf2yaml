@@ -46,13 +46,13 @@ def idfdiffs(idf1, idf2):
             n_idfobjs1 = [item for item in idfobjs1 if getobjname(item) == name]
             n_idfobjs2 = [item for item in idfobjs2 if getobjname(item) == name]
             for idfobj1, idfobj2 in zip_longest(n_idfobjs1, n_idfobjs2):
-                if idfobj1 == None:
+                if idfobj1 is None:
                     thediffs[(idfobj2.key.upper(), getobjname(idfobj2))] = (
                         None,
                         idf2.idfname,
                     )  # (idf1.idfname, None) -> old
                     break
-                if idfobj2 == None:
+                if idfobj2 is None:
                     thediffs[(idfobj1.key.upper(), getobjname(idfobj1))] = (
                         idf1.idfname,
                         None,

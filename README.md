@@ -43,6 +43,11 @@ idf_string_string = yaml2idf(
 assert idf_string_file == idf_string_string
 ```
 
+The tool has a command line entry point as well.
+```
+python -m idf2yaml --help
+```
+
 The conversion from IDF to YAML includes useful annotations for the
 attributes, such as 
 - Physical units
