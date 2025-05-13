@@ -5,7 +5,7 @@ from pathlib import Path
 from eppy.modeleditor import IDF
 from ruamel.yaml.main import YAML, CommentedMap
 
-DEFAULT_IDD = str(Path(__file__).parent.parent / "iddfiles" / "Energy+.idd")
+DEFAULT_IDD = str(Path(__file__).parent / "iddfiles" / "Energy+.idd")
 
 
 def make_help_string(meta):

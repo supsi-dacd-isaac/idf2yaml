@@ -10,7 +10,7 @@ import subprocess
     "args, expected_output, expected_exit_code",
     [
         (["-i2y", "example.idf", "-e"], "File 'example.idf' has been converted to 'example.yaml'.", None),
-        (["-i2y", "example.idf", "-o", "named_example.yaml", "-i", "iddfiles/Energy+.idd", "-s"], None, None),
+        (["-i2y", "example.idf", "-o", "named_example.yaml", "-i", "idf2yaml/iddfiles/Energy+.idd", "-s"], None, None),
         (["-y2i", "named_example.yaml", "-o", "round_trip.idf", "-s"], None, None),
         (["-y2i", "i_dont_exist.yaml"], "File 'i_dont_exist.yaml' is not a valid path and cannot be processed. Exiting...", 1),
         (
